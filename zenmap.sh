@@ -39,8 +39,15 @@ if [ $exitstatus = 0 ];  then
  
         exitstatus=$?
         if [ $exitstatus = 0 ];  then
-            clear
-            nmap $OPTIONS $OPT $IP
+            TEXT=$(whiptail --title "Zenmap" --inputbox "Write path to txt where will be saved results of scan (\" > path \") (nothing if you dont want save)" 10 60 3>&1 1>&2 2>&3)
+            
+            exitstatus=$?
+            if [ $exitstatus = 0 ]; then
+                clear
+                nmap $OPTIONS $OPT $IP $TEXT
+            else
+                exit && clear
+            fi
         else
             exit && clear
         fi
